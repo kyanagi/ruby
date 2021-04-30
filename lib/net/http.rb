@@ -453,7 +453,7 @@ module Net   #:nodoc:
     # as a string.  The target can either be specified as
     # (+uri+, +headers+), or as (+host+, +path+, +port+ = 80); so:
     #
-    #    print Net::HTTP.get(URI('http://www.example.com/index.html'))
+    #    print Net::HTTP.get('http://www.example.com/index.html')
     #
     # or:
     #
@@ -471,7 +471,7 @@ module Net   #:nodoc:
     # as a Net::HTTPResponse object.  The target can either be specified as
     # (+uri+, +headers+), or as (+host+, +path+, +port+ = 80); so:
     #
-    #    res = Net::HTTP.get_response(URI('http://www.example.com/index.html'))
+    #    res = Net::HTTP.get_response('http://www.example.com/index.html')
     #    print res.body
     #
     # or:
@@ -492,6 +492,7 @@ module Net   #:nodoc:
         }
       else
         uri = uri_or_host
+        uri = URI(uri) if uri.is_a?(String)
         headers = path_or_headers
         start(uri.hostname, uri.port,
               :use_ssl => uri.scheme == 'https') {|http|
